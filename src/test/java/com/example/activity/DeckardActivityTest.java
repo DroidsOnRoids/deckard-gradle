@@ -10,7 +10,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,12 +67,22 @@ public class DeckardActivityTest {
 
     @Test
     public void testFail() throws Exception {
-        assertThat(new Date()).isCloseTo(new Date(), -1);
+        assertThat(new Date()).isCloseTo(new Date(0), 10);
     }
 
     @Test
     public void testError() throws Exception {
-        int x = new int[-1].length;
+        int len = new int[-1].length;
+    }
+
+    @Test(timeout = 5000)
+    public void testTimeout() throws Exception {
+        InetAddress.getByName("google.pl");
+    }
+
+    @Test (expected = NegativeArraySizeException.class)
+    public void testExpectedException() throws Exception {
+        int len = new int[-1].length;
     }
 
     @Ignore
